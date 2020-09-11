@@ -11,8 +11,10 @@ function App() {
     <MovieProvider>
       <div className="App">
         <Nav></Nav>
-        <AddMovie></AddMovie>
-        <MovieList></MovieList>
+        <div className="container">
+          <AddMovie></AddMovie>
+          <MovieList></MovieList>
+        </div>
       </div>
     </MovieProvider>
   );

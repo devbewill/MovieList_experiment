@@ -6,7 +6,7 @@ const MovieList = () => {
   const [movies, setMovies] = useContext(MovieContext);
 
   return (
-    <div>
+    <div className="itemList">
       {movies.map((movie) => (
         <Movie
           name={movie.name}

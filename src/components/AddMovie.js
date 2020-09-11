@@ -20,13 +20,22 @@ const AddMovie = () => {
       ...prevMovies,
       { name: name, price: price, id: Math.floor(Math.random() * 1001) },
     ]);
+    setName("");
+    setPrice("");
   };
   return (
     <form onSubmit={addMovie}>
-      <input type="text" name="name" value={name} onChange={updateName}></input>
+      <input
+        type="text"
+        name="name"
+        placeholder="title"
+        value={name}
+        onChange={updateName}
+      ></input>
       <input
         type="text"
         name="price"
+        placeholder="price"
         value={price}
         onChange={updatePrice}
       ></input>

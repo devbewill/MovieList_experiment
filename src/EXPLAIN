@@ -1,0 +1,61 @@
+Voglio creare una pagina che mostri un elenco di film che mostri la quantità di film inseriti nella navbar.
+i componenti che andrò a creare sono:
+<Nav> 
+<MovieList>
+<Movie>
+
+Lo state (l'obj coi dati dei film) potremmo spostarlo direttamente in App.js in modo da poter fare un prop-drilling sui components figli ma risulterebbe verboso e nel caso di molteplici state da condividere il codice risulterebb eparticlarmente incasinato.
+
+La soluzione migliore è quella di usare l'hook useContext che ci permette di sharare gli state in giro per i componenti.
+
+come fare quindi?
+
+##creo un MovieContext.js con all'interno l'obj contente le info sui film
+
+import React, { useState, createContext } from "react";
+export const MovieContext = createContext();
+
+export const MovieProvider = (props) => {
+  const [movies, setMovies] = useState([ //creaimo lo state contenente l'enco dei film
+    { name: "Harry Potter", price: 10, id: 12345 },
+    { name: "Game of Thrones", price: 12, id: 12346 },
+    { name: "Inception", price: 8, id: 12347 },
+  ]);
+  return (
+    <MovieContext.Provider value={[movies, setMovies]}> //aggiungiamo al MovieContext.Provider una prop dove indichiamo quello che vogliamo sharare tra componenti
+      {props.children}
+    </MovieContext.Provider>
+  );
+};
+
+##wrappo l'App.js (o quello che mi serve) con il MovieProvider component 
+import { MovieProvider } from "./MovieContext";
+
+function App() {
+  return (
+    <MovieProvider>
+      <div className="App">
+        <Nav></Nav>
+        <AddMovie></AddMovie>
+        <MovieList></MovieList>
+      </div>
+    </MovieProvider>
+  );
+}
+
+## Nei componenti in cui mi serve accedere allo state vado ad importare il MovieContext
+
+import React, { useContext } from "react";
+import { MovieContext } from "../MovieContext";
+
+const Nav = () => {
+  const [movies, setMovies] = useContext(MovieContext);
+
+  return (
+    <nav>
+      <h3>Movie list</h3>
+      <p>List of movies: {movies.length} </p>
+    </nav>
+  );
+};
+

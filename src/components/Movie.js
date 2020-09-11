@@ -2,10 +2,10 @@ import React, { useState, useContext } from "react";
 
 const Movie = ({ name, price, id }) => {
   return (
-    <div>
+    <div className="item shadow">
+      <h6>{id}</h6>
       <h3>{name}</h3>
-      <p>{price}</p>
-      <p>{id}</p>
+      <p>{price}€</p>
     </div>
   );
 };
